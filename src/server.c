@@ -1,59 +1,44 @@
-#include "../libft/includes/libft.h"
-#include "../libft/stdio/ft_printf/ft_printf.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../include/minitalk.h"
 
-// static void	signal_handler(int signal, siginfo_t *info, void *context)
-// {
-// 	static int	bit = 0;
-// 	static unsigned char	c = 0;
-
-// 	(void)context;
-// 	(void)info;
-// 	if (signal == SIGUSR1)
-// 		c |= (1 << bit);
-// 	bit++;
-// 	if (bit == 8)
-// 	{
-// 		ft_printf("%c", c);
-// 		bit = 0;
-// 		c = 0;
-// 	}
-// }
-static void	signal_handler(int signal, siginfo_t *info, void *context)
+static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-    static int bit = 0;
-    static unsigned char c = 0;
+	static unsigned char c = 0;
+	static int bit_count = 0;
+	(void)info;
+	(void)context;
 
-    (void)context;
-    (void)info;
-
-    if (signal == SIGUSR1)
-        c |= (1 << bit);         // 1ビット
-    else if (signal == SIGUSR2)
-        c &= ~(1 << bit);        // 0ビット ←これが抜けていた!!
-
-    bit++;
-    if (bit == 8)
-    {
-        ft_printf("%c", c);
-        bit = 0;
-        c = 0;
-    }
+	if (signum == SIGUSR2)
+		c |= (1 << bit_count); // SIGUSR2=1
+	// SIGUSR1=0は何もしない
+	bit_count++;
+	if (bit_count == 8)
+	{
+		write(1, &c, 1);
+		if (c == '\0') {
+			// 文字列終端時の処理（必要ならカウンタリセット等）
+		}
+		c = 0;
+		bit_count = 0;
+	}
 }
 
-
-int	main(void)
+int main(void)
 {
-	struct sigaction	act;
+	struct sigaction sa;
+	pid_t pid = getpid();
+	printf("Server PID: %d\n", pid);
 
-	ft_printf("%d\n", getpid());
-	act.sa_sigaction = signal_handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = SA_SIGINFO;
-	sigaddset(&act.sa_mask, SIGUSR2);
-	sigaddset(&act.sa_mask, SIGUSR1);
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
+	sa.sa_sigaction = signal_handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+
 	while (1)
 		pause();
+	return (0);
 }

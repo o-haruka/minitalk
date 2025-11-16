@@ -1,66 +1,50 @@
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "../include/minitalk.h"
-#include "../libft/includes/libft.h"
 
-static int	client_error_msg(void)
+void send_bit(int server_pid, int bit)
 {
-	ft_putendl_fd("\033[31mError", 2);
-	ft_putendl_fd(" Usage: ./client [PID] [message]\033[0m", 2);
-	return (1);
-}
-
-static int	send_error(void)
-{
-	ft_putendl_fd("\033[31mError", 2);
-	ft_putendl_fd(" Failed to send signal (invalid PID?)\033[0m", 2);
-	return (1);
-}
-
-static int	send_char(int pid, char str)
-{
-	int	i;
-
-	i = 0;
-	while (i < 8)
+	int signal = (bit == 0) ? SIGUSR1 : SIGUSR2;
+	if (kill(server_pid, signal) == -1)
 	{
-		if ((str & (1 << i)) != 0)
-		{
-			if (kill(pid, SIGUSR1) == -1)
-				return (-1);
-		}
-		else
-		{
-			if (kill(pid, SIGUSR2) == -1)
-				return (-1);
-		}
-		usleep(500);
-		i++;
+		perror("kill");
+		exit(EXIT_FAILURE);
 	}
-	return (0);
+	usleep(100);
 }
 
-int	main(int argc, char **argv)
+void send_string(int server_pid, char *str)
 {
-	int	i;
-	int	pid;
+	int i, bit;
+	while (1)
+	{
+		unsigned char c = *str;
+		for (i = 0; i < 8; i++)
+		{
+			bit = (c >> i) & 1;
+			send_bit(server_pid, bit);
+		}
+		if (c == '\0')
+			break;
+		str++;
+	}
+}
 
-	i = 0;
+int main(int argc, char **argv)
+{
 	if (argc != 3)
-		return (client_error_msg());
-	while (argv[1][i] != '\0')
 	{
-		if (!ft_isdigit(argv[1][i++]))
-			return (client_error_msg());
+		printf("Usage: %s <server_pid> <string>\n", argv[0]);
+		return (1);
 	}
-	i = 0;
-	pid = ft_atoi(argv[1]);
-	if (pid <= 0)
-		return (client_error_msg());
-	while (argv[2][i] != '\0')
+	int server_pid = atoi(argv[1]);
+	if (server_pid <= 0)
 	{
-		if (send_char(pid, argv[2][i++]) == -1)
-			return (send_error());
+		printf("Invalid server PID.\n");
+		return (1);
 	}
-	if (send_char(pid, '\n') == -1)
-		return (send_error());
+	send_string(server_pid, argv[2]);
 	return (0);
 }
