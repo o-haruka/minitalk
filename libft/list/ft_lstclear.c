@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 17:51:10 by homura            #+#    #+#             */
+/*   Updated: 2025/11/08 17:51:11 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_list.h"
+
 // #include "libft.h"
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -9,26 +22,27 @@
 //     struct s_list *next;
 // } t_list;
 
-void del_content(void *content)
+void	del_content(void *content)
 {
-    free(content);
+	free(content);
 }
 
-void ft_lstclear(t_list **lst, void (*del)(void *)){
-    t_list *current;
-    t_list *next;
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*current;
+	t_list	*next;
 
-    if (!lst || !*lst || !del)
-        return;
-    current = *lst;
-    while (current)
-    {
-        next = current->next;
-        del(current->content);
-        free(current);
-        current = next;
-    }
-    *lst = NULL;
+	if (!lst || !*lst || !del)
+		return ;
+	current = *lst;
+	while (current)
+	{
+		next = current->next;
+		del(current->content);
+		free(current);
+		current = next;
+	}
+	*lst = NULL;
 }
 
 // int main(void){

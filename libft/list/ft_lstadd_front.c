@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 17:51:05 by homura            #+#    #+#             */
+/*   Updated: 2025/11/08 17:51:06 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_list.h"
+
 // #include "libft.h"
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -9,11 +22,12 @@
 //     struct s_list *next;
 // } t_list;
 
-void ft_lstadd_front(t_list **lst, t_list *new){
-    if (lst == NULL || new == NULL)
-        return;
-    new->next = *lst;
-    *lst = new; 
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (lst == NULL || new == NULL)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }
 
 // int main(void) {
@@ -38,7 +52,7 @@ void ft_lstadd_front(t_list **lst, t_list *new){
 //     t_list *new;
 //     new = malloc(sizeof(t_list));
 //     if(new == NULL)
-//         return 1;
+//         return (1);
 //     new->content = "C";
 //     new->next = NULL;
 //     ft_lstadd_front(&head, new);
@@ -50,5 +64,5 @@ void ft_lstadd_front(t_list **lst, t_list *new){
 //         temp = temp->next;
 //     }
 
-//     return 0;
+//     return (0);
 // }

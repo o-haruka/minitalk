@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 20:12:34 by vscode            #+#    #+#             */
-/*   Updated: 2025/10/06 22:07:13 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/08 18:53:08 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,4 @@ int		ft_tolower(int c);
 int		ft_isspace(int c);
 int		ft_isstrspace(char *str);
 int		ft_isint(char *str);
-
-
 #endif

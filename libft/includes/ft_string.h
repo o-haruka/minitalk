@@ -13,10 +13,10 @@
 #ifndef FT_STRING_H
 # define FT_STRING_H
 
-#include <limits.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <limits.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);

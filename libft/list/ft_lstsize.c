@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 17:51:41 by homura            #+#    #+#             */
+/*   Updated: 2025/11/08 17:51:42 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_list.h"
+
 // #include "libft.h"
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -9,36 +22,43 @@
 //     struct s_list *next;
 // } t_list;
 
-int ft_lstsize(t_list *list){
-    int count = 0;
-    while(list){
-        count++;
-        list = list->next;
-    }
-    return count;
+int	ft_lstsize(t_list *list)
+{
+	int	count;
+
+	count = 0;
+	while (list)
+	{
+		count++;
+		list = list->next;
+	}
+	return (count);
 }
 
 // ノードを作成するヘルパー関数
-t_list *create_node(void *content)
+t_list	*create_node(void *content)
 {
-    t_list *node = (t_list *)malloc(sizeof(t_list));
-    if (!node)
-        return (NULL);
-    node->content = content;
-    node->next = NULL;
-    return (node);
+	t_list	*node;
+
+	node = (t_list *)malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node->content = content;
+	node->next = NULL;
+	return (node);
 }
 
 // リストを解放するヘルパー関数
-void free_list(t_list *lst)
+void	free_list(t_list *lst)
 {
-    t_list *temp;
-    while (lst)
-    {
-        temp = lst;
-        lst = lst->next;
-        free(temp);
-    }
+	t_list	*temp;
+
+	while (lst)
+	{
+		temp = lst;
+		lst = lst->next;
+		free(temp);
+	}
 }
 
 // int main(void)
@@ -53,13 +73,13 @@ void free_list(t_list *lst)
 
 //     // テストケース2: 単一ノードのリスト
 //     t_list *list2 = create_node("single");
-    
+
 //     printf("\nTest 2: List with 1 node\n");
 //     printf("Node count: %d\n", ft_lstsize(list2)); // 期待値: 1
 
 //     // テストケース3: 空リスト
 //     t_list *list3 = NULL;
-    
+
 //     printf("\nTest 3: Empty list\n");
 //     printf("Node count: %d\n", ft_lstsize(list3)); // 期待値: 0
 
