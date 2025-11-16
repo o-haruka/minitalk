@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:23:52 by homura            #+#    #+#             */
-/*   Updated: 2025/11/16 16:12:11 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/16 18:29:16 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/includes/libft.h"
 #include "../libft/stdio/ft_printf/ft_printf.h"
 #include "minitalk.h"
-##include <unistd.h>
+#include <unistd.h>
 
 static void	signal_handler(int signal, siginfo_t *info, void *context)
 {

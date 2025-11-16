@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:23:44 by homura            #+#    #+#             */
-/*   Updated: 2025/11/16 16:13:21 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/16 18:32:37 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static int	send_char(int pid, char str)
 {
 	int	i;
 
-	i = 0;
-	while (i < 8)
+	i = 7;
+	while (i >= 0)
 	{
 		if ((str & (1 << i)) != 0)
 		{
@@ -44,8 +44,8 @@ static int	send_char(int pid, char str)
 			if (kill(pid, SIGUSR2) == -1)
 				return (-1);
 		}
-		usleep(100);
-		i++;
+		usleep(500);
+		i--;
 	}
 	return (0);
 }
