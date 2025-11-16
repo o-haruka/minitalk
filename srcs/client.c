@@ -1,4 +1,16 @@
-#include "../include/minitalk.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/16 11:23:44 by homura            #+#    #+#             */
+/*   Updated: 2025/11/16 16:13:21 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minitalk.h"
 #include "../libft/includes/libft.h"
 
 static int	client_error_msg(void)

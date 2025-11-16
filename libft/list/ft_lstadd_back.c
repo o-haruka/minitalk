@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 17:50:59 by homura            #+#    #+#             */
+/*   Updated: 2025/11/08 17:51:01 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_list.h"
+
 // #include "libft.h"
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -9,24 +22,22 @@
 //     struct s_list *next;
 // } t_list;
 
-void ft_lstadd_back(t_list **lst, t_list *new){
-    t_list *last;
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
 
-    if (!lst || !new)
-        return;
-    
-    if(*lst == NULL){
-        *lst = new;
-        return;
-    }
-
-    last = *lst;
-    while(last->next !=NULL)
-        last = last->next;
-
-    last->next = new;
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
 }
-
 
 // リストを表示する補助関数
 // void print_list(t_list *lst)
@@ -67,5 +78,5 @@ void ft_lstadd_back(t_list **lst, t_list *new){
 //     free(node2);
 //     free(node3);
 
-//     return 0;
+//     return (0);
 // }

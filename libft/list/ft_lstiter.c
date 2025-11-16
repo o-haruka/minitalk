@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 17:51:20 by homura            #+#    #+#             */
+/*   Updated: 2025/11/08 17:51:21 by homura           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_list.h"
+
 // #include "libft.h"
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -9,18 +22,21 @@
 //     struct s_list *next;
 // } t_list;
 
-void double_content(void *content)
+void	double_content(void *content)
 {
-    int *value = (int *)content;
-    *value *= 2;
+	int	*value;
+
+	value = (int *)content;
+	*value *= 2;
 }
 
-void ft_lstiter(t_list *lst, void (*f)(void *)){
-    while (lst)
-    {
-        f(lst->content);
-        lst = lst->next;
-    }
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }
 
 // int main(void) {
@@ -33,5 +49,5 @@ void ft_lstiter(t_list *lst, void (*f)(void *)){
 //     node2->content = &val2;
 //     node2->next = NULL;
 //     ft_lstiter(node1,double_content);
-//     return 0;
+//     return (0);
 // }
