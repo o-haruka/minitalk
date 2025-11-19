@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/16 20:17:15 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/19 14:53:19 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,19 @@
 #include "../libft/stdio/ft_printf/ft_printf.h"
 #include <unistd.h>
 
-static void	send_bit(int server_pid, int bit)
+static void	print_usage_error_message(char *prog_name)
+{
+	ft_printf("\033[31mUsage: %s <server_pid> <string>\033[0m\n", prog_name);
+	exit(1);
+}
+
+static void	print_invalid_pid_message(void)
+{
+	ft_printf("\033[31mInvalid server PID.\033[0m\n");
+	exit(1);
+}
+
+static void	send_bit(pid_t server_pid, unsigned char bit)
 {
 	int	signal;
 
@@ -23,18 +35,17 @@ static void	send_bit(int server_pid, int bit)
 		signal = SIGUSR1;
 	else
 		signal = SIGUSR2;
-	if (kill(server_pid, signal) == -1)
+	if (kill(server_pid, signal) == -1) // kill 成功：０、失敗：－１（errnoセット）
 	{
 		perror("kill");
 		exit(EXIT_FAILURE);
 	}
-	usleep(5000);
 }
 
-static void	send_string(int server_pid, char *str)
+static void	send_string(pid_t server_pid, char *str)
 {
 	int				i;
-	int				bit;
+	unsigned char	bit;
 	unsigned char	c;
 
 	i = 0;
@@ -48,6 +59,7 @@ static void	send_string(int server_pid, char *str)
 		{
 			bit = (c >> i) & 1;
 			send_bit(server_pid, bit);
+			usleep(500);
 			i++;
 		}
 		if (c == '\0')
@@ -61,16 +73,10 @@ int	main(int argc, char **argv)
 	int	server_pid;
 
 	if (argc != 3)
-	{
-		ft_printf("Usage: %s <server_pid> <string>\n", argv[0]);
-		return (1);
-	}
+		print_usage_error_message(argv[0]);
 	server_pid = atoi(argv[1]);
 	if (server_pid <= 0)
-	{
-		ft_printf("Invalid server PID.\n");
-		return (1);
-	}
+		print_invalid_pid_message();
 	send_string(server_pid, argv[2]);
 	return (0);
 }
