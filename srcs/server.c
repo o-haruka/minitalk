@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:20:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/16 19:50:18 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/19 21:27:48 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 	static unsigned char	c = 0;
 	static int				bit_count = 0;
 
-	(void)info;
 	(void)context;
 	if (signum == SIGUSR2)
 		c |= (1 << bit_count);
@@ -35,6 +34,9 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		c = 0;
 		bit_count = 0;
 	}
+	// ACK送信
+	if (info && info->si_pid > 0)
+		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
