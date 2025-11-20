@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/19 21:27:47 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/20 15:11:40 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	send_bit(pid_t server_pid, unsigned char bit)
 	// ACK待ち
 	while (!ack_received)
 		usleep(50);
+	// pause();
 }
 
 static void	send_string(pid_t server_pid, char *str)

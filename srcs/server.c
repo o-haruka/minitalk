@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:20:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/19 21:27:48 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/20 13:19:33 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(void)
 	pid = getpid();
 	ft_printf("Server PID: \033[32m%d\033[0m\n", pid);
 	sa.sa_sigaction = signal_handler;
-	sa.sa_flags = SA_SIGINFO;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+	// sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
