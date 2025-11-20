@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:20:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/20 13:19:33 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/20 16:07:28 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		c = 0;
 		bit_count = 0;
 	}
-	// ACK送信
 	if (info && info->si_pid > 0)
 		kill(info->si_pid, SIGUSR1);
 }
@@ -48,7 +47,6 @@ int	main(void)
 	ft_printf("Server PID: \033[32m%d\033[0m\n", pid);
 	sa.sa_sigaction = signal_handler;
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	// sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

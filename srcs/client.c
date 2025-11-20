@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/20 15:11:40 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/20 16:14:05 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,12 @@
 #include "../libft/stdio/ft_printf/ft_printf.h"
 #include <unistd.h>
 
-static volatile sig_atomic_t ack_received = 0;
+static volatile sig_atomic_t	g_ack_received = 0;
 
-static void ack_handler(int signum)
+static void	ack_handler(int signum)
 {
 	(void)signum;
 	ack_received = 1;
-}
-
-static void	print_usage_error_message(char *prog_name)
-{
-	ft_printf("\033[31mUsage: %s <server_pid> <string>\033[0m\n", prog_name);
-	exit(1);
-}
-
-static void	print_invalid_pid_message(void)
-{
-	ft_printf("\033[31mInvalid server PID.\033[0m\n");
-	exit(1);
 }
 
 static void	send_bit(pid_t server_pid, unsigned char bit)
@@ -49,10 +37,8 @@ static void	send_bit(pid_t server_pid, unsigned char bit)
 		perror("kill");
 		exit(EXIT_FAILURE);
 	}
-	// ACK待ち
 	while (!ack_received)
 		usleep(50);
-	// pause();
 }
 
 static void	send_string(pid_t server_pid, char *str)
@@ -83,19 +69,25 @@ static void	send_string(pid_t server_pid, char *str)
 
 int	main(int argc, char **argv)
 {
-	int	server_pid;
-	struct sigaction sa;
+	int					server_pid;
+	struct sigaction	sa;
 
 	sa.sa_handler = ack_handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
-
 	if (argc != 3)
-		print_usage_error_message(argv[0]);
+	{
+		ft_printf("\033[31mUsage: %s <server_pid> <string>\033[0m\n",
+			prog_name);
+		exit(1);
+	}
 	server_pid = atoi(argv[1]);
 	if (server_pid <= 0)
-		print_invalid_pid_message();
+	{
+		ft_printf("\033[31mInvalid server PID.\033[0m\n");
+		exit(1);
+	}
 	send_string(server_pid, argv[2]);
 	return (0);
 }
