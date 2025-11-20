@@ -7,6 +7,7 @@ CFLAGS = -Wall -Wextra -Werror
 SRC_PATH	= srcs
 SRC			= client.c \
 			server.c \
+			error.c \
 
 SRCS		= $(addprefix $(SRC_PATH)/, $(SRC))
 
@@ -28,11 +29,11 @@ all: $(LIBS) $(NAME_CLIENT) $(NAME_SERVER)
 $(LIBS):
 	@ make -C $(LIB_PATH)
 
-$(NAME_CLIENT): $(OBJ_PATH)/client.o $(LIBS)
-	$(CC) $(CFLAGS) $(INCS) $(OBJ_PATH)/client.o $(LIBS) -o $(NAME_CLIENT)
+$(NAME_CLIENT): $(OBJ_PATH)/client.o $(OBJ_PATH)/error.o $(LIBS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCS) $(OBJ_PATH)/client.o $(OBJ_PATH)/error.o $(LIBS) -o $(NAME_CLIENT)
 
-$(NAME_SERVER): $(OBJ_PATH)/server.o $(LIBS)
-	$(CC) $(CFLAGS) $(INCS) $(OBJ_PATH)/server.o $(LIBS) -o $(NAME_SERVER)
+$(NAME_SERVER): $(OBJ_PATH)/server.o $(OBJ_PATH)/error.o $(LIBS)
+	$(CC) $(CFLAGS) $(INCS) $(OBJ_PATH)/server.o $(OBJ_PATH)/error.o $(LIBS) -o $(NAME_SERVER)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@ mkdir -p $(OBJ_PATH)

@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/20 16:14:05 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/20 20:01:19 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static volatile sig_atomic_t	g_ack_received = 0;
 static void	ack_handler(int signum)
 {
 	(void)signum;
-	ack_received = 1;
+	g_ack_received = 1;
 }
 
 static void	send_bit(pid_t server_pid, unsigned char bit)
 {
 	int	signal;
 
-	ack_received = 0;
+	g_ack_received = 0;
 	if (bit == 0)
 		signal = SIGUSR1;
 	else
@@ -37,7 +37,7 @@ static void	send_bit(pid_t server_pid, unsigned char bit)
 		perror("kill");
 		exit(EXIT_FAILURE);
 	}
-	while (!ack_received)
+	while (!g_ack_received)
 		usleep(50);
 }
 
@@ -77,17 +77,10 @@ int	main(int argc, char **argv)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	if (argc != 3)
-	{
-		ft_printf("\033[31mUsage: %s <server_pid> <string>\033[0m\n",
-			prog_name);
-		exit(1);
-	}
+		print_error("\033[31mUsage: <server_pid> <string>\033[0m\n");
 	server_pid = atoi(argv[1]);
 	if (server_pid <= 0)
-	{
-		ft_printf("\033[31mInvalid server PID.\033[0m\n");
-		exit(1);
-	}
+		print_error("\033[31mInvalid server PID.\033[0m\n");
 	send_string(server_pid, argv[2]);
 	return (0);
 }
