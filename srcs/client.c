@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/24 20:07:46 by homura           ###   ########.fr       */
+/*   Updated: 2025/12/06 11:56:24 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void	send_bit(pid_t server_pid, unsigned char bit)
 	else
 		signal = SIGUSR2;
 	if (kill(server_pid, signal) == -1)
-		print_error_exit("\033[31mError: failed to send signal to server.\033[0m\n");
-
+		print_error_exit("\033[31mError: failed to send signal.\033[0m\n");
 	while (!g_ack_received)
 		usleep(1);
 }
@@ -53,7 +52,7 @@ static void	send_string(pid_t server_pid, char *str)
 		{
 			bit = (c >> i) & 1;
 			send_bit(server_pid, bit);
-			usleep(500);
+			usleep(100);
 			i++;
 		}
 		if (c == '\0')
