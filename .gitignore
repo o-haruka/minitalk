@@ -2,4 +2,4 @@ obj/
 *.txt
 client
 server
-./vscode/
+.vscode/
