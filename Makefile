@@ -24,12 +24,12 @@ LIBS		= $(addprefix $(LIB_PATH)/, $(LIB))
 
 RM			= rm -f
 
-all: $(LIBS) $(NAME_CLIENT) $(NAME_SERVER)
+all: $(NAME_CLIENT) $(NAME_SERVER)
 
 $(LIBS):
 	@ make -C $(LIB_PATH)
 
-$(NAME_CLIENT): $(OBJ_PATH)/client.o $(OBJ_PATH)/error.o $(LIBS) $(LIBS)
+$(NAME_CLIENT): $(OBJ_PATH)/client.o $(OBJ_PATH)/error.o $(LIBS)
 	$(CC) $(CFLAGS) $(INCS) $(OBJ_PATH)/client.o $(OBJ_PATH)/error.o $(LIBS) -o $(NAME_CLIENT)
 
 $(NAME_SERVER): $(OBJ_PATH)/server.o $(OBJ_PATH)/error.o $(LIBS)

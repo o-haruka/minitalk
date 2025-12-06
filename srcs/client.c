@@ -6,13 +6,13 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/12/06 11:56:24 by homura           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:07:06 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-static volatile sig_atomic_t	g_ack_received = 0;
+static volatile sig_atomic_t	g_ack_received = 0; // volatile sig_atomic_tはなんのためにつけるのか？
 
 static void	ack_handler(int signum)
 {
@@ -52,7 +52,7 @@ static void	send_string(pid_t server_pid, char *str)
 		{
 			bit = (c >> i) & 1;
 			send_bit(server_pid, bit);
-			usleep(100);
+			usleep(100); //いらない
 			i++;
 		}
 		if (c == '\0')

@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:20:46 by homura            #+#    #+#             */
-/*   Updated: 2025/12/06 13:48:03 by homura           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:07:04 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		bit_count = 0;
 	}
 	if (info && info->si_pid > 0)
-		kill(info->si_pid, SIGUSR1);
+		kill(info->si_pid, SIGUSR1);//返り値は？
 }
 
 int	main(void)
@@ -48,6 +48,6 @@ int	main(void)
 	pid = getpid();
 	ft_printf("Server PID: \033[32m%d\033[0m\n", pid);
 	while (1)
-		pause();
+		pause();//いらないかも
 	return (0);
 }
