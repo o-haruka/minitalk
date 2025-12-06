@@ -6,15 +6,12 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:20:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/21 15:55:04 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/22 14:28:27 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
-#include "../libft/includes/libft.h"
-#include "../libft/stdio/ft_printf/ft_printf.h"
 #include <stdlib.h>
-#include <unistd.h>
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
 {

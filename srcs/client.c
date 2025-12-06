@@ -6,14 +6,11 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:13:46 by homura            #+#    #+#             */
-/*   Updated: 2025/11/21 15:59:31 by homura           ###   ########.fr       */
+/*   Updated: 2025/11/24 20:07:46 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
-#include "../libft/includes/libft.h"
-#include "../libft/stdio/ft_printf/ft_printf.h"
-#include <unistd.h>
 
 static volatile sig_atomic_t	g_ack_received = 0;
 
@@ -36,7 +33,7 @@ static void	send_bit(pid_t server_pid, unsigned char bit)
 		print_error_exit("\033[31mError: failed to send signal to server.\033[0m\n");
 
 	while (!g_ack_received)
-		usleep(50);
+		usleep(1);
 }
 
 static void	send_string(pid_t server_pid, char *str)
